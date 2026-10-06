@@ -35,17 +35,27 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#">Clothing</a></li>
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="#clothing-products">Clothing</a></li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Accessories</a>
+              <a class="nav-link" href="#electronics-products">Accessories</a>
+            </li>
+            <!-- Search bar -->
+            <li class="nav-item">
+              <input
+                type="search"
+                id="product-search"
+                class="form-control search-input"
+                placeholder="Search products..."
+                oninput="filterProducts()"
+                autocomplete="off"
+              />
             </li>
             <!-- Cart Icon in Navbar -->
             <li class="nav-item">
               <a class="nav-link" href="cart.html">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-badge">0</span>
-                <!-- Ensure this span exists -->
               </a>
             </li>
           </ul>
@@ -125,20 +135,32 @@
       </button>
     </div>
 
-    <!-- PRODUCT GRID -->
     <!-- PRODUCT CATEGORIES -->
-    <div class="container mt-5">
+    <div class="container">
+
+      <!-- No-results message (hidden until search yields nothing) -->
+      <div id="search-no-results" class="search-no-results" style="display:none;">
+        No products found.
+      </div>
+
       <!-- Trending Products -->
-      <h2 class="section-title">🔥 Trending Products</h2>
-      <div id="trending-products" class="row"></div>
+      <section id="section-trending" class="products-section">
+        <h2 class="section-title">🔥 Trending Products</h2>
+        <div id="trending-products" class="row product-row"></div>
+      </section>
 
       <!-- Clothing -->
-      <h2 class="section-title mt-5">👗 Clothing Collection</h2>
-      <div id="clothing-products" class="row"></div>
+      <section id="section-clothing" class="products-section">
+        <h2 class="section-title">👗 Clothing Collection</h2>
+        <div id="clothing-products" class="row product-row"></div>
+      </section>
 
       <!-- Electronics -->
-      <h2 class="section-title mt-5">💻 Electronics & Gadgets</h2>
-      <div id="electronics-products" class="row"></div>
+      <section id="section-electronics" class="products-section">
+        <h2 class="section-title">💻 Electronics &amp; Gadgets</h2>
+        <div id="electronics-products" class="row product-row"></div>
+      </section>
+
     </div>
 
     <!-- FOOTER -->
@@ -147,7 +169,7 @@
         <div class="row">
           <!-- Online Store -->
           <div class="col-md-3">
-            <h5>ONLINE STORE</h5>
+            <h5>Online Store</h5>
             <ul class="footer-list">
               <li><a href="#">Men Clothing</a></li>
               <li><a href="#">Women Clothing</a></li>
@@ -158,7 +180,7 @@
 
           <!-- Helpful Links -->
           <div class="col-md-3">
-            <h5>HELPFUL LINKS</h5>
+            <h5>Helpful Links</h5>
             <ul class="footer-list">
               <li><a href="#">Home</a></li>
               <li><a href="#">About</a></li>
@@ -168,7 +190,7 @@
 
           <!-- Brand Partners -->
           <div class="col-md-3">
-            <h5>BRAND PARTNERS</h5>
+            <h5>Brand Partners</h5>
             <ul class="footer-list">
               <li>Zara</li>
               <li>Pantaloons</li>
@@ -180,7 +202,7 @@
 
           <!-- Address -->
           <div class="col-md-3">
-            <h5>ADDRESS</h5>
+            <h5>Address</h5>
             <ul class="footer-list">
               <li>Building 101</li>
               <li>Central Avenue</li>
@@ -190,17 +212,17 @@
           </div>
         </div>
       </div>
-      <!-- Copyright Section -->
-      <div class="row mt-4">
-        <div class="col-12 text-center">
-          <p class="copyright">
-            © 2024 Shopify | Designed by <strong>Ashwani Upadhyay</strong>
-          </p>
+      <!-- Copyright -->
+      <div class="container">
+        <div class="row mt-4">
+          <div class="col-12">
+            <p class="copyright">
+              © 2024 Shopify | Designed by <strong>Ashwani Upadhyay</strong>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
-
-    <!-- Product Card Example -->
 
     <!-- JavaScript & Bootstrap -->
     <script src="js/api.js"></script>

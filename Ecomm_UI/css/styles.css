@@ -1,197 +1,443 @@
 /* =======================
    Global Theme Colors
    ======================= */
-   :root {
-    --primary-color: #ff6600; /* Vibrant Orange */
-    --secondary-color: #111; /* Dark Gray Background */
-    --text-color: #ddd; /* Light Text */
-    --footer-text: #ccc; /* Footer Text (Improved) */
-    --hover-color: #ff8533; /* Lighter Orange */
-    --white: #fff; /* White Text */
-    --navbar-bg: #222; /* Slightly lighter for navbar */
+:root {
+  --primary-color: #ff6600;
+  --secondary-color: #111;
+  --text-color: #ddd;
+  --footer-text: #ccc;
+  --hover-color: #ff8533;
+  --white: #fff;
+  --navbar-bg: #222;
+  --navbar-height: 66px;       /* matches actual rendered navbar height */
+  --section-gap: 4rem;         /* consistent vertical gap between page sections */
+  --card-img-height: 220px;    /* uniform product image height */
+}
+
+/* =======================
+   Base / Body
+   ======================= */
+body {
+  padding-top: var(--navbar-height);   /* prevent fixed navbar from overlapping content */
+}
+
+/* =======================
+   Navbar
+   ======================= */
+.navbar {
+  background: var(--navbar-bg) !important;
+  padding: 12px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--primary-color) !important;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white) !important;
+  margin: 0 6px;
+  padding: 6px 10px !important;
+  transition: color 0.25s ease-in-out;
+}
+
+.nav-link:hover {
+  color: var(--hover-color) !important;
+}
+
+/* Cart badge in navbar */
+.cart-badge {
+  background: var(--primary-color);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  margin-left: 4px;
+  vertical-align: middle;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 4px 8px;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Search input in navbar */
+.search-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  color: var(--white);
+  font-size: 14px;
+  padding: 5px 14px;
+  width: 200px;
+  transition: width 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--primary-color);
+  width: 260px;
+  color: var(--white);
+  box-shadow: none;
+}
+
+/* Cancel/clear button injected by type="search" in some browsers */
+.search-input::-webkit-search-cancel-button {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* =======================
+   Hero Carousel
+   ======================= */
+#heroCarousel {
+  margin-top: 0;                         /* body padding-top already clears navbar */
+}
+
+#heroCarousel .carousel-item img {
+  max-height: 480px;
+  object-fit: cover;
+  width: 100%;
+}
+
+#heroCarousel .carousel-caption {
+  background: rgba(0, 0, 0, 0.58);
+  padding: 18px 24px;
+  border-radius: 10px;
+  bottom: 2rem;
+}
+
+.carousel-caption h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.carousel-caption p {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.carousel-caption .btn {
+  background: var(--primary-color);
+  border: none;
+  color: var(--white);
+  padding: 8px 22px;
+  font-weight: 600;
+  transition: background 0.25s ease-in-out;
+}
+
+.carousel-caption .btn:hover {
+  background: var(--hover-color);
+}
+
+/* =======================
+   Product Sections
+   ======================= */
+.products-section {
+  margin-top: var(--section-gap);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1.75rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+/* Subtle underline accent on section titles */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 2px;
+  margin: 8px auto 0;
+}
+
+/* Product card grid row — consistent gutters horizontally and vertically */
+.product-row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 1.5rem;
+}
+
+/* Offset fixed navbar when scrolling to a section via anchor link */
+.products-section {
+  scroll-margin-top: calc(var(--navbar-height) + 16px);
+}
+
+/* =======================
+   Product Cards
+   ======================= */
+.card {
+  border: none;
+  border-radius: 12px;
+  background: var(--secondary-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;                          /* ensures all cards in a row match height */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(255, 102, 0, 0.28);
+}
+
+.card-img-top {
+  width: 100%;
+  height: var(--card-img-height);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.06);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.1rem 1.2rem;
+  flex: 1;                               /* fills remaining card height */
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+  /* prevent very long names from breaking layout */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  min-height: 2.8em;                     /* reserve space for up to 2 lines */
+}
+
+.card-text {
+  font-size: 13px;
+  color: var(--text-color);
+  flex: 1;                               /* pushes price + button to bottom */
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.price {
+  font-size: 16px;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+/* Add to Cart Button */
+.btn-primary {
+  background: var(--primary-color);
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 0;
+  width: 100%;
+  border-radius: 6px;
+  transition: background 0.25s ease-in-out, transform 0.2s ease-in-out;
+  margin-top: auto;                      /* always pinned to bottom of card-body */
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+/* =======================
+   Cart Page
+   ======================= */
+.cart-page-container {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.cart-page-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.table-dark th,
+.table-dark td {
+  vertical-align: middle;
+  padding: 12px 14px;
+}
+
+.table-dark th {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #aaa;
+}
+
+.table-dark td img {
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* =======================
+   Footer
+   ======================= */
+.footer {
+  background: var(--secondary-color);
+  color: var(--footer-text);
+  padding: 56px 0 32px;
+  font-size: 14px;
+  margin-top: var(--section-gap);
+  border-top: 1px solid rgba(255, 102, 0, 0.18);
+}
+
+.footer h5 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--white);
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 9px;
+  color: var(--footer-text);
+  line-height: 1.6;
+}
+
+.footer-list a {
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: color 0.25s ease-in-out;
+}
+
+.footer-list a:hover {
+  color: var(--primary-color);
+}
+
+.footer .copyright {
+  text-align: center;
+  width: 100%;
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--footer-text);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 20px;
+}
+
+/* =======================
+   No search results message
+   ======================= */
+.search-no-results {
+  text-align: center;
+  color: var(--text-color);
+  font-size: 18px;
+  padding: 3rem 0 1rem;
+  opacity: 0.7;
+}
+
+/* =======================
+   Responsive Adjustments
+   ======================= */
+@media (max-width: 992px) {
+  :root {
+    --section-gap: 3rem;
+    --card-img-height: 200px;
   }
-  
-  /* =======================
-       Navbar Styling (Fixed)
-       ======================= */
-  .navbar {
-    background: var(--navbar-bg) !important; /* Ensures visibility */
-    padding: 15px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); /* Adds slight elevation */
-    z-index: 1000; /* Ensures navbar stays on top */
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+
+  .search-input {
+    width: 160px;
   }
-  
-  .navbar-brand {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary-color) !important;
+
+  .search-input:focus {
+    width: 200px;
   }
-  
-  .nav-link {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--white) !important;
-    margin: 0 10px;
-    transition: color 0.3s ease-in-out;
-  }
-  
-  .nav-link:hover {
-    color: var(--hover-color) !important;
-  }
-  
-  /* Fix navbar toggler icon visibility */
-  .navbar-toggler {
-    border: none;
-  }
-  
-  .navbar-toggler-icon {
-    filter: invert(1); /* Makes toggler icon visible */
-  }
-  
-  /* =======================
-       Hero Section (Carousel)
-       ======================= */
-  #heroCarousel .carousel-caption {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
+
   .carousel-caption h2 {
-    font-size: 32px;
-    font-weight: bold;
-    color: var(--white);
+    font-size: 22px;
   }
-  
+
   .carousel-caption p {
-    font-size: 18px;
-    color: var(--text-color);
-  }
-  
-  .carousel-caption .btn {
-    margin-top: 10px;
-    background: var(--primary-color);
-    border: none;
-    color: var(--white);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .carousel-caption .btn:hover {
-    background: var(--hover-color);
-  }
-  
-  /* Ensure all carousel images are the same height without cropping */
-  /* Ensure all carousel images have the same height and cover the container */
-  
-  /* Make the carousel container flexible to adjust to image height */
-  
-  /* =======================
-       Product Section
-       ======================= */
-  .section-title {
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: var(--primary-color);
-  }
-  
-  /* Product Cards */
-  .card {
-    transition: all 0.3s ease-in-out;
-    border: none;
-    border-radius: 10px;
-    background: var(--secondary-color);
-    color: var(--text-color);
-    box-shadow: 0px 4px 8px rgba(255, 102, 0, 0.2); /* Adds slight orange glow */
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 10px 15px rgba(255, 102, 0, 0.3);
-  }
-  
-  /* Product Image */
-  .card-img-top {
-    transition: transform 0.3s ease-in-out;
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .card:hover .card-img-top {
-    transform: scale(1.1);
-  }
-  
-  /* Add to Cart Button */
-  .btn-primary {
-    background: var(--primary-color);
-    border: none;
-    opacity: 0.9;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .card:hover .btn-primary {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
-  
-  .btn-primary:hover {
-    background: var(--hover-color);
-  }
-  
-  /* =======================
-       Footer Styling (Enhanced)
-       ======================= */
-  .footer {
-    background: var(--secondary-color);
-    color: var(--footer-text);
-    padding: 50px 0;
     font-size: 14px;
-    text-align: center; /* Ensures alignment */
   }
-  
-  .footer h5 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    color: var(--white);
+
+  #heroCarousel .carousel-item img {
+    max-height: 360px;
   }
-  
-  .footer-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+}
+
+@media (max-width: 576px) {
+  :root {
+    --section-gap: 2.5rem;
+    --card-img-height: 180px;
+    --navbar-height: 60px;
   }
-  
-  .footer-list li {
-    margin-bottom: 10px;
-    color: var(--footer-text);
-    line-height: 1.6;
+
+  .section-title {
+    font-size: 22px;
   }
-  
-  .footer-list a {
-    color: var(--footer-text);
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
+
+  .carousel-caption {
+    display: none;                       /* avoids overlapping text on small screens */
   }
-  
-  .footer-list a:hover {
-    color: var(--primary-color);
+
+  #heroCarousel .carousel-item img {
+    max-height: 220px;
   }
-  
-  /* Copyright */
-  .footer .copyright {
+
+  .footer {
     text-align: center;
-    width: 100%;
-    margin-top: 20px;
-    font-size: 12px;
-    color: var(--footer-text);
   }
+
+  .footer .col-md-3 {
+    margin-bottom: 24px;
+  }
+}
